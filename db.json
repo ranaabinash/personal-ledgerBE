@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "ranaabinash",
+      "password": "ranaabinash"
+    },
+    {
+      "id": "2",
+      "username": "brunomars",
+      "password": "bruno"
+    },
+    {
+      "username": "kidcudi",
+      "password": "kidd",
+      "id": "KSarU_D"
+    },
+    {
+      "username": "abinash",
+      "password": "abinash",
+      "id": "LxBdoh7"
+    },
+    {
+      "username": "keshav",
+      "password": "keshav",
+      "id": "aRwF_b4"
+    }
+  ]
+}
