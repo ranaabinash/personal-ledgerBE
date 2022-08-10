@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const authRoutes = require("./routes/auth/authRoutes");
 
 const app = express();
 
@@ -20,10 +21,14 @@ app.set("view engine", "ejs"); // For view that generates Server Side rendering
 app.use(morgan("dev")); // For the console logging activites
 app.use(express.urlencoded({ extended: true })); // For parsing the response body
 app.use(express.static("public")); // For using static files like image or css in render
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello client");
 });
+
+// Auth routes
+app.use(authRoutes);
 
 // For the invalid path request
 app.use((req, res) => {
