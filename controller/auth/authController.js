@@ -44,7 +44,7 @@ module.exports.signup = async (req, res) => {
     const user = await User.create({ username, email, password });
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ user: user._id });
+    res.status(201).json({ user: user._id, token });
   } catch (error) {
     const errors = handleErrors(error);
     res.status(400).json({ errors });
@@ -58,7 +58,7 @@ module.exports.login = async (req, res) => {
     const user = await User.login(username, password);
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ user: user._id });
+    res.status(200).json({ user: user._id, token });
   } catch (error) {
     const errors = handleErrors(error);
     res.status(400).json({ errors });
@@ -67,15 +67,17 @@ module.exports.login = async (req, res) => {
 
 module.exports.user_get = async (req, res) => {
   const id = req.params.id;
-  const user = await User.findById(id);
-  if (user) {
-    const payload = {
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-    };
-    res.status(201).json(payload);
-  } else {
+  try {
+    const user = await User.findById(id);
+    if (user) {
+      const payload = {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+      };
+      res.status(201).json(payload);
+    }
+  } catch (error) {
     res.status(400).json({ errors: "Failed to fetch user" });
   }
 };
